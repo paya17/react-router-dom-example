@@ -1,0 +1,4 @@
+.active {
+  background-color: tomato;
+  text-decoration: none;
+} /*NavLink컴포넌트로 인해, 클릭된 링크의 <a>태그에 생기는 class="active"를 index.css에서 꾸미기*/

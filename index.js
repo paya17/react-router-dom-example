@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'; //사용하기 위해 import! //'react-router-dom'에 있는 애들
+import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom'; //사용하기 위해 import! //'react-router-dom'에 있는 애들
 
 
 function Home() {  
@@ -39,16 +39,16 @@ function App() {  //'App컴포넌트'  //Home,Topics,Contact컴포넌트를 App�
       <h1>Hello React Router DOM</h1>
 
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/topics">Topics</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><NavLink exact to="/">Home</NavLink></li>  {/*<a>태그를 NavLink컴포넌트로 교체*/} {/* *페이지가 리로드 되지 않도록*/} {/*NavLink컴포넌트->*링크를 클릭하면, html에서 <a>태그에 class="active"속성이 생긴다*/} {/*exact속성 추가*/}
+        <li><NavLink to="/topics">Topics</NavLink></li>
+        <li><NavLink to="/contact">Contact</NavLink></li>
       </ul>
 
-      <Switch>  {/* *Switch컴포넌트로 Route컴포넌트를 감싸면, path와 일치하는 '첫번째 컴포넌트만' 보여준다*/}
-        <Route exact path="/"><Home></Home></Route>  {/* *Route컴포넌트로 감싼 후에 path속성을 지정, exact속성 지정*/} {/* *Route컴포넌트로 감싸면, 사용자가 들어온 url에 따라 거기에 해당되는 컴포넌트만 보여줌!*/}
+      <Switch>  
+        <Route exact path="/"><Home></Home></Route>  
         <Route path="/topics"><Topics></Topics></Route>
-        <Route path="/contact"><Contact></Contact></Route>  {/*사용자가 '/contact'라는 url로 들어오면, Contact컴포넌트를 보여준다*/}
-        <Route path="/">Not Found</Route>  {/*사용자가 '없는 주소(/abcd)'로 들어오면, Not Found를 보여준다(Switch와 exact 이용?!)*/}
+        <Route path="/contact"><Contact></Contact></Route>  
+        <Route path="/">Not Found</Route>  
       </Switch>
     </div>
   );
@@ -57,7 +57,7 @@ function App() {  //'App컴포넌트'  //Home,Topics,Contact컴포넌트를 App�
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter><App /></BrowserRouter> {/* *BrowserRouter컴포넌트로 최상위 컴포넌트인 App컴포넌트를 감쌌다*/}
+    <BrowserRouter><App /></BrowserRouter> {/*웹 서버 설정에 따라, BrowserRouter 또는 HashRouter 사용*/}
   </React.StrictMode>,
   document.getElementById('root')
 );
@@ -81,7 +81,13 @@ reportWebVitals();
 -Switch(컴포넌트): Switch컴포넌트로 Route컴포넌트를 감싸면, path와 일치하는 '첫번째 컴포넌트만' 보여준다
 */ 
 
+//여기부터
+/*
+-Link(컴포넌트): *'페이지가 리로드 되지 않도록' 구현, 'to'속성 사용
+-NavLink(컴포넌트): Link컴포넌트에 기능 더 부가된 것, *링크를 클릭하면, html에서 <a>태그에 'class="active"속성이 생긴다', exact속성을 추가하면, 클릭된 링크의 <a>태그에'만' class="active"속성이 생긴다, class="active"속성을 이용해, 사용자가 어떤 페이지에 있는지 알 수 있다(index.css 함께 사용)
+*/
+//Link컴포넌트보다 NavLink컴포넌트를 더 많이 쓴다
 
-
-
+//HashRouter: BrowserRouter와 다르게 url에 #이 끼어들어 가고, 웹 서버는 # 뒷부분의 주소를 무시함, 하지만 js로 # 뒷부분의 주소를 알 수 있어서 react-router-dom이 url을 읽어서 해당되는 컴포넌트를 보여줄 수 있다?!
+//웹 서버 설정이 사용자가 어떤 path로 들어와도 동일한 웹페이지를 서비스할 수 있다면 BrowserRouter 사용, 그럴 수 없다면 HashRouter 사용
 
